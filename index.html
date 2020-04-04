@@ -6,14 +6,33 @@
 		<link rel="stylesheet" href="estilo.css">
 	</head>
 
-	<body>
+	<body class="preload">
 
-		<form class="box" action="" method="post">
-			<h1>Login</h1>
-			<input type="text" name="" placeholder="Username">
-			<input type="password" name="" placeholder="Password">
-			<input type="submit" name="" placeholder="Login">
-		</form>
+		<!-- Siempre se recomienda que el elemento despues de <body> sea por ejemplo -->
+		<!-- un <div> o un <section>, elementos que encapsulan otras partes de la aplicación. -->
+		<!-- En este caso, un <div login> encapsulara el formulario. -->
+		<div class="login">
+			<form class="box" action="" method="post">
+				<h1>Login</h1>
+				<input type="text" name="" placeholder="Username">
+				<input type="password" name="" placeholder="Password">
+				<input type="submit" name="" placeholder="Login">
+			</form>
+		</div>
 
 	</body>
+
+	<script>
+		// Con esto evitamos esa "animación" inicial donde los elementos con `transition` 
+		// cambian de su estado original al personalizado en CSS.
+
+		// Esto podría no ser necesario más adelante cuando incluyas javascript en tu sitio, la carga
+		// de ese javascript ocultaria esa animación naturalmente.
+
+		// Significado: Cuando `window` (la pagina) cargue, busca el elemento <body> y elimina la clase `preload`
+		// La clase .preload desactiva el `transition` de todos elementos.
+		window.addEventListener('load', () => {
+			document.getElementsByTagName('body')[0].classList.remove('preload');
+		});
+	</script>
 </html>

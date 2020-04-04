@@ -1,15 +1,24 @@
+html {
+	/* 
+		Al hacer diseños de pantalla completa siempre asegurate
+		de que el elemento <html> cubra todo el area o 
+		se pueden producir efectos indeseados.
+	*/
+	height: 100%;
+}
+
 body{
 	margin:0;
 	padding: 0;
 	font-family: sans-serif;
 	background: #003554;
 	background-image: url(fondo.png);
-	height: 100%;
+	height: 100%; /* Esto no funcionaba sin el `height: 100%` de <html> */
 	background-repeat: no-repeat;
-
-
+	background-size: cover; /* Esta regla hace que el fondo se ajuste automaticamente para cubrir todo el area, que no deje espacios vacios o que el fondo se vea incompleto. */
 }
 
+/*
 .box{
 	width: 350px;
 	padding: 40px; 
@@ -20,7 +29,35 @@ body{
 	background: #051923;
 	text-align: center;
 	border-radius: 50px;
+}
+*/
 
+/*
+	Aunque `position: absolute` funciona para centrar elementos no es lo recomendado
+	ya que coloca el elemento en una "capa flotante" y puede hacer más complicado el desarrollo. 
+	`position: absolute` se recomienda únicamente para elementos que de verdad deben estar encima 
+	de los elementos padre como por ejemplo un modal o una alerta.
+
+	Para elementos que requieren una posición específica en el diseño se recomienda usar `Flexbox` o `Grid`.
+	En este caso he usado Flexbox y he centrado los elementos hijos de .login (.box es el unico hijo por ahora)
+	con 3 simples reglas, puedes aprender más sobre Flexbox en:
+	- https://css-tricks.com/snippets/css/a-guide-to-flexbox/ (Inglés)
+	- https://developer.mozilla.org/es/docs/Web/CSS/CSS_Flexible_Box_Layout/Conceptos_Basicos_de_Flexbox (Español)
+*/
+.login {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: inherit;
+}
+
+.box {
+	width: 350px;
+	padding: 40px;
+	background: #051923;
+	text-align: center;
+	border-radius: 50px;
 }
 
 .box h1{
@@ -30,7 +67,7 @@ body{
 }
 
 .box input[type="text"], .box input[type="password"]{
-	border: 0;
+	/*border: 0;*/
 	background: none;
 	display: block;
 	margin: 30px auto;
@@ -41,8 +78,21 @@ body{
 	outline: none;
 	color: white;
 	border-radius: 24px;
-	transition: 0.25s;
-	
+
+	/*
+		transition: 0.25s;
+
+		Al no especificar las propiedades por defecto se animaran todas las propiedades CSS del elemento 
+		y esto genera 2 problemas:
+
+		- Al cargar la pagina se ve esa "animación" en la que el elemento cambia de su estado original al personalizado en CSS.
+		- El navegador web consume más RAM/CPU intentando prepararse para hacer animaciones de todas las propiedades.
+
+		Estas reglas serian lo ideal:
+	*/
+
+	transition-property: width, border;
+	transition-duration: 0.25s;
 }
 
 .box input[type="text"]:focus,.box input[type="password"]:focus{
@@ -62,10 +112,21 @@ body{
 	outline: none;
 	color: white;
 	border-radius: 24px;
-	transition: 0.25s;
 	cursor: pointer;
+
+	/*transition: 0.25s;*/
+
+	transition-property: background;
+	transition-duration: 0.25s;
 }
 
 .box input[type="submit"]:hover{
 	background:#613DC1;
+}
+
+.preload * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
 }
